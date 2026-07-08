@@ -1,0 +1,11 @@
+##create_clock
+create_clock -name {i_clk_osc} [get_ports i_clk_osc] -period {20.000} -waveform {0.000 10.000}
+create_clock -name {i_ft600_clk} [get_ports i_ft600_clk] -period {10.000} -waveform {0.000 5.000}
+create_generated_clock -name {clk_100M} -source [get_ports {i_clk_osc}] [get_nets {clk_100M}] -master_clock [get_clocks {i_clk_osc}] -multiply_by {2} -duty_cycle {50.000}
+create_generated_clock -name {clk_2M} -source [get_ports {i_clk_osc}] [get_nets {clk_2M}] -master_clock [get_clocks {i_clk_osc}] -divide_by {25}
+#create_generated_clock -name {clk_45k} -source [get_pins CLK_PLL_INST/clkout1] [get_nets CLK_DRIVER_INST.clk_out1] -master_clock [get_clocks clk_2M] -multiply_by {1} -divide_by {44}
+create_generated_clock -name {clk_160M} -source [get_ports {i_clk_osc}] [get_nets {clk_160M}] -master_clock [get_clocks {i_clk_osc}] -multiply_by {16} -divide_by {5} -duty_cycle {50.000}
+#create_generated_clock -name {clk_40M} -source [get_ports {i_clk_osc}] [get_nets {clk_40M}] -master_clock [get_clocks {i_clk_osc}] -multiply_by {4} -divide_by {5} -duty_cycle {50.000}
+#create_generated_clock -name {o_spi_sclk} -source [get_ports {i_clk_osc}] [get_nets {o_spi_sclk}] -master_clock [get_clocks {i_clk_osc}] -multiply_by {4} -divide_by {5} -duty_cycle {50.000}
+#create_generated_clock -name {clk_25M} -source [get_ports {i_clk_osc}] [get_nets {clk_25M}] -master_clock [get_clocks {i_clk_osc}]  -divide_by {2} -duty_cycle {50.000}
+create_generated_clock -name {o_spi_sclk} -source [get_pins CLK_PLL_INST/clkout2] [get_nets {o_spi_sclk}] -master_clock [get_clocks clk_160M] -divide_by {4} -duty_cycle {50.000}
