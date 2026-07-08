@@ -8,4 +8,4 @@ create_generated_clock -name {clk_160M} -source [get_ports {i_clk_osc}] [get_net
 #create_generated_clock -name {clk_40M} -source [get_ports {i_clk_osc}] [get_nets {clk_40M}] -master_clock [get_clocks {i_clk_osc}] -multiply_by {4} -divide_by {5} -duty_cycle {50.000}
 #create_generated_clock -name {o_spi_sclk} -source [get_ports {i_clk_osc}] [get_nets {o_spi_sclk}] -master_clock [get_clocks {i_clk_osc}] -multiply_by {4} -divide_by {5} -duty_cycle {50.000}
 #create_generated_clock -name {clk_25M} -source [get_ports {i_clk_osc}] [get_nets {clk_25M}] -master_clock [get_clocks {i_clk_osc}]  -divide_by {2} -duty_cycle {50.000}
-create_generated_clock -name {o_spi_sclk} -source [get_pins CLK_PLL_INST/clkout2] [get_nets {o_spi_sclk}] -master_clock [get_clocks clk_160M] -divide_by {4} -duty_cycle {50.000}
+#create_generated_clock -name {o_spi_sclk} -source [get_pins CLK_PLL_INST/clkout2] [get_nets {o_spi_sclk}] -master_clock [get_clocks clk_160M] -divide_by {4} -duty_cycle {50.000}

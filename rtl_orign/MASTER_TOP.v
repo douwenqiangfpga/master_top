@@ -284,7 +284,7 @@ always @(posedge clk_100M or negedge rst_n) begin
     end
 end
 
-assign w_temp_data = o_gpio_master_data ?o_gpio_master_data:w_temp_data;
+assign w_temp_data = r_temp_data;
 
 /***********************通信解析************************/
 wire    [2:0]   USB_state;

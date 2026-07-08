@@ -944,7 +944,9 @@ SPI_DRIVE SPI_DRIVE_INST(
 //assign w_spi_tx_data = r_spi_tx_data;
 //
 //assign  w_spi_tx_st   = r_spi_tx_st;
-reg         r_cmd_rece_done1/*synthesis PAP_MARK_DEBUG = "1"*/;
+reg [47:0] r_spi_tx_data/*synthesis PAP_MARK_DEBUG = "1"*/;
+reg        r_spi_tx_st/*synthesis PAP_MARK_DEBUG = "1"*/;
+reg        r_cmd_rece_done1/*synthesis PAP_MARK_DEBUG = "1"*/;
 reg         r_cmd_rece_done2/*synthesis PAP_MARK_DEBUG = "1"*/;
 
 always @(posedge clk_100M or negedge rst_n) begin
@@ -959,8 +961,22 @@ always @(posedge clk_100M or negedge rst_n) begin
 
 end
 
-assign  w_spi_tx_st   = r_cmd_rece_done; //上升沿触发
-assign w_spi_tx_data = r_cmd_rece_done ? r_cmd_rece_data : w_spi_tx_data;
+always @(posedge clk_100M or negedge rst_n) begin
+    if(!rst_n)begin
+        r_spi_tx_data <= 48'd0;
+        r_spi_tx_st   <= 1'b0;
+    end
+    else begin
+        r_spi_tx_st <= 1'b0;
+        if(r_cmd_rece_done && (r_spi_rx_bit_wide != 16'd0))begin
+            r_spi_tx_data <= r_cmd_rece_data;
+            r_spi_tx_st   <= 1'b1;
+        end
+    end
+end
+
+assign w_spi_tx_data = r_spi_tx_data;
+assign w_spi_tx_st   = r_spi_tx_st;
 
 
 
